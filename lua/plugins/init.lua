@@ -214,5 +214,15 @@ return {
       })
     end,
   },
+  
+
+  -- For templates. "!" for html
+  {
+    "mattn/emmet-vim",
+    config = function()
+      vim.g.user_emmet_leader_key = ","
+    end,
+  },
+
 
 }
