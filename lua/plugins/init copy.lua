@@ -116,10 +116,18 @@ return {
       },
     },
     opts = function()
-      return require "configs.cmp"
+      return require "nvchad.configs.cmp"
     end,
   },
 
+  -- Плагин для управления файлами (nvim-tree)
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return require "nvchad.configs.nvimtree"
+    end,
+  },
 
   -- Git интеграция
   {
@@ -165,7 +173,6 @@ return {
         return require "nvchad.configs.nvimtree"
       end,
   },
-
 {
     "junegunn/vim-emoji",
     config = function()
@@ -200,19 +207,6 @@ return {
     end,
   },
 
-  -- ESLint
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.eslint, -- Диагностика ESLint
-          null_ls.builtins.formatting.eslint, -- Форматирование ESLint
-        },
-      })
-    end,
-  },
+
 
 }
