@@ -3,86 +3,78 @@ local lspconfig = require("lspconfig")
 -- Настройка pyright для Python
 lspconfig.pyright.setup({
     on_attach = function(client, bufnr)
-        -- Автоформатирование при сохранении файла
         vim.cmd [[ autocmd BufWritePre <buffer> lua vim.lsp.buf.format() ]]
     end,
     settings = {
         python = {
             analysis = {
-                typeCheckingMode = "basic",  -- Можно установить "off", "basic" или "strict"
+                typeCheckingMode = "basic",
             },
         },
     },
 })
 
--- Настройка ts_ls для JavaScript и TypeScript (замена устаревшего tsserver)
+-- Настройка ts_ls для JavaScript и TypeScript
 lspconfig.ts_ls.setup({
     on_attach = function(client, bufnr)
-        -- Отключаем встроенное форматирование, если используется Prettier
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
-
-        -- Пример команды для автоимпорта
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         buf_set_keymap("n", "<leader>i", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
     end,
     settings = {
-        javascript = {
-            format = {
-                enable = false,  -- Отключаем форматирование в пользу Prettier
-            },
-        },
-        typescript = {
-            format = {
-                enable = false,  -- Отключаем форматирование в пользу Prettier
-            },
-        },
-        react = {
-            jsx = "react-native",  -- Убедитесь, что jsx установлен в правильный режим
-        },
+        javascript = { format = { enable = false } },
+        typescript = { format = { enable = false } },
+        react = { jsx = "react-native" },
     },
     filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
     root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", ".git")
 })
 
--- Настройка ESLint для всех поддерживаемых файлов (JavaScript, TypeScript, React)
+-- Настройка ESLint для всех поддерживаемых файлов
 lspconfig.eslint.setup({
     cmd = { "vscode-eslint-language-server", "--stdio" }, 
     on_attach = function(client, bufnr)
-        -- Отключаем встроенное форматирование, если ESLint настроен на автоформатирование через Prettier
         client.server_capabilities.documentFormattingProvider = true
-
-        -- Автоматическое исправление ошибок ESLint при сохранении файла
         vim.cmd [[ autocmd BufWritePre <buffer> EslintFixAll ]]
-
-        -- Установка команд для выполнения исправлений и отображения действий LSP
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         buf_set_keymap("n", "<leader>e", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
     end,
     settings = {
-        validate = "on",  -- Проверка ESLint включена
-        useEslintrc = true,  -- Используем конфигурацию из .eslintrc.js
+        validate = "on",
+        useEslintrc = true,
         codeAction = {
-            disableRuleComment = {
-                enable = true,
-                location = "separateLine"
-            },
-            showDocumentation = {
-                enable = true
-            }
+            disableRuleComment = { enable = true, location = "separateLine" },
+            showDocumentation = { enable = true }
         },
     },
 })
 
--- Конфигурация vim.diagnostic.config
-vim.diagnostic.config({
-    virtual_text = true,  -- Отображение текста ошибки рядом с кодом
-    signs = true,         -- Включение значков рядом с номерами строк
-    underline = true,     -- Подчеркивание строк с ошибками
-    severity_sort = true, -- Сортировка диагностик по степени важности
-    float = {             -- Параметры для плавающих окон с ошибками
-        border = "rounded",
-        source = "always",
+-- Настройка LSP для HTML
+lspconfig.html.setup({
+    cmd = { "/opt/homebrew/bin/vscode-html-language-server", "--stdio" },
+    on_attach = function(client, bufnr)
+        -- Добавь настройки для работы с HTML
+        client.server_capabilities.documentFormattingProvider = true
+        vim.cmd [[ autocmd BufWritePre <buffer> lua vim.lsp.buf.format() ]]
+    end,
+    settings = {
+        html = {
+          lint = {
+            enable = true,    -- Включаем линтинг
+            validate = "on",  -- Проверка ошибок включена
+          },
+            format = { wrapLineLength = 80 },
+        },
     },
+    filetypes = { "html", "htm" },
 })
 
+-- Конфигурация vim.diagnostic.config
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    severity_sort = true,
+    float = { border = "rounded", source = "always" },
+})
