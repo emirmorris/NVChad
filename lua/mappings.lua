@@ -45,3 +45,10 @@ map("n", "<C-t>", "<cmd>Huefy<CR>", { noremap = true, silent = true, desc = "Ope
 map("n", "<leader>rn", function()
     vim.lsp.buf.rename()
 end, { desc = "Rename variable across all occurrences" })
+
+-- Маппинг для выхода из Neovim
+map("n", "<C-q>", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
+
+-- Delete word ander cursos and insert mode
+--map("n", "<A-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
+map("n", "<C-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })

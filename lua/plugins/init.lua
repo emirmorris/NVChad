@@ -24,7 +24,7 @@ return {
     end,
   },
 
--- Плагин для автозакрытия HTML/JSX тегов
+-- -- Плагин для автозакрытия HTML/JSX тегов
 {
   "windwp/nvim-ts-autotag",
   config = function()
@@ -57,7 +57,7 @@ return {
     lazy = true,
   },
 
-  -- Плагин для цветовой палитры и цветовых команд (minty)
+  -- -- Плагин для цветовой палитры и цветовых команд (minty)
   {
     "nvchad/minty",
     cmd = { "Shades", "Huefy" },
@@ -119,6 +119,7 @@ return {
       return require "configs.cmp"
     end,
   },
+
 
 
   -- Git интеграция
@@ -223,6 +224,7 @@ return {
       vim.g.user_emmet_leader_key = ","
     end,
   },
+
 
 
 }
