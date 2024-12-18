@@ -53,3 +53,6 @@ map("n", "<C-q>", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim
 --map("n", "<A-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("n", "<C-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("v", "<C-i>", "c", { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" })
+
+-- Redo
+map("n", "<C-r>", "<C-r>", { noremap = true, silent = true, desc = "Redo last undone change" })
