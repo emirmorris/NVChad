@@ -12,13 +12,13 @@ local options = {
   },
 
   mapping = {
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-
+    -- ["<C-p>"] = cmp.mapping.select_prev_item(),
+    -- ["<C-n>"] = cmp.mapping.select_next_item(),
+    -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    -- ["<C-Space>"] = cmp.mapping.complete(),
+    -- ["<C-e>"] = cmp.mapping.close(),
+    --
     ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
@@ -53,21 +53,5 @@ local options = {
     { name = "path" },
   },
 }
-
--- Настройка для автокомплита командной строки
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "cmdline" },
-  },
-})
-
--- Настройка для поиска по файлу (например, /)
-cmp.setup.cmdline("/", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "buffer" },
-  },
-})
 
 return vim.tbl_deep_extend("force", options, require "nvchad.cmp")
