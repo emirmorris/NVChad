@@ -25,10 +25,10 @@ map("v", "<C-d>", '"_d', { desc = "Delete selection without copying (Visual)" })
 map("i", "<C-d>", "<C-o>\"_x", { desc = "Delete character without copying (Insert)" })
 
 -- Маппинг для сохранения файла по CTRL-S из всех режимов
-map({'i', 'n', 'v'}, '<C-s>', '<cmd>w<CR>', { silent = true })
+map({'i', 'n', 'v'}, '<leader>s', '<cmd>w<CR>', { silent = true })
 
 -- Маппинг для UNDO на Ctrl-Z в NORMAL, VISUAL и INSERT режимах
-vim.keymap.set({"n", "v", "i"}, "<C-z>", "<Esc>u", { noremap = true, silent = true })
+map({"n", "v", "i"}, "<C-z>", "<Esc>u", { noremap = true, silent = true })
 
 -- Маппинг jj для выхода из режима вставки.
 map("i", "jj", "<ESC>")
@@ -39,21 +39,21 @@ map("i", "<C-a>", "<Esc>ggVG", { desc = "Select All Text in Insert Mode" })
 map("v", "<C-a>", "<Esc>ggVG", { desc = "Select All Text in Visual Mode" })
 
 -- Map for Huefy (colorpicker)
-map("n", "<C-t>", "<cmd>Huefy<CR>", { noremap = true, silent = true, desc = "Open ColorPicker (Huefy)" })
+map("n", "<leader>t", "<cmd>Huefy<CR>", { noremap = true, silent = true, desc = "Open ColorPicker (Huefy)" })
 
--- Маппинг для переименования переменной с помощью LSP, оно будет изменено во всех местах.
+-- Маппинг для переименования переменной с помощью LSP, оно будет изменено во всех местах
 map("n", "<leader>rn", function()
     vim.lsp.buf.rename()
 end, { desc = "Rename variable across all occurrences" })
 
 -- Маппинг для выхода из всех окон и выхода из Neovim
--- map("n", "<C-q>", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
-map("n", "<C-q>", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
+map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
+--map("n", "<leader>q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
 
 -- Delete word ander cursos and insert mode
 --map("n", "<A-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
-map("n", "<C-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
-map("v", "<C-i>", "c", { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" })
+map("n", "<leader>i", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
+map("v", "<leader>i", "c", { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" })
 
 -- Redo
 map("n", "<C-r>", "<C-r>", { noremap = true, silent = true, desc = "Redo last undone change" })
