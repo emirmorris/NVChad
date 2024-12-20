@@ -8,6 +8,9 @@ vim.opt.relativenumber = true
 vim.opt.wildmenu = true -- Включает автодополнение в командной строке
 vim.opt.wildmode = { "longest:full", "full" } -- Настраивает режим автодополнения
 
+vim.cmd('syntax enable')   -- Включает подсветку синтаксиса
+vim.cmd('filetype plugin indent on')  -- Включает автозавершение и плагины
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

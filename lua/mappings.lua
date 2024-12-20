@@ -47,7 +47,8 @@ map("n", "<leader>rn", function()
 end, { desc = "Rename variable across all occurrences" })
 
 -- Маппинг для выхода из всех окон и выхода из Neovim
-map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
+map("n", "<Esc><Esc>", ":qa<CR>", { noremap = true, silent = true, desc = "Quit and close all windows Neovim" })
+map( "n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
 --map("n", "<leader>q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
 
 -- Delete word ander cursos and insert mode
@@ -57,3 +58,4 @@ map("v", "<leader>i", "c", { noremap = true, silent = true, desc = "Change selec
 
 -- Redo
 map("n", "<C-r>", "<C-r>", { noremap = true, silent = true, desc = "Redo last undone change" })
+
