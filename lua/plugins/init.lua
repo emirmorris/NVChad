@@ -57,7 +57,7 @@ return {
     lazy = true,
   },
 
-  -- -- Плагин для цветовой палитры и цветовых команд (minty)
+  -- Плагин для цветовой палитры и цветовых команд (minty)
   {
     "nvchad/minty",
     cmd = { "Shades", "Huefy" },
@@ -160,7 +160,10 @@ return {
       opts = function()
         local nvim_tree = require "nvim-tree"
         nvim_tree.setup({
-          -- любые другие настройки для nvim-tree
+            view = { -- doesn't work
+              -- width = 20,  -- Здесь установите желаемую ширину
+              -- side = 'left',  -- Это может быть 'left' или 'right'
+            },
         })
         
         return require "nvchad.configs.nvimtree"
@@ -274,19 +277,21 @@ return {
     },
   },
 
-
-
 -- leap
-  -- {
-  --   "ggandor/leap.nvim",
-  --   config = function()
-  --     local leap = require('leap')
-  --     require("leap").add_default_mappings()
-  --     leap.opts.case_sensetive = true
-  --   end,
-  -- },
+{
+  "ggandor/leap.nvim",
+  config = function()
+    local leap = require('leap')
 
 
+    -- Дополнительные настройки Leap
+    leap.opts.case_sensitive = true
+
+    -- Настроить отображение символов для текущего поиска
+    require('leap').opts.highlight_unlabeled = true
+    require('leap').opts.highlight_current_target = true
+  end,
+}
 
 
 

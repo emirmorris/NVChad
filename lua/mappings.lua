@@ -55,7 +55,14 @@ map( "n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit N
 --map("n", "<A-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("n", "<leader>i", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("v", "<leader>i", "c", { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" })
+map("v", "<leader>i", '"_c', { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" }) -- the same but black hole
+
+-- Delete selected word and paste from a buffer
+vim.api.nvim_set_keymap('v', '<leader>ip', '"_diw"+p', { noremap = true, silent = true })
 
 -- Redo
 map("n", "<C-r>", "<C-r>", { noremap = true, silent = true, desc = "Redo last undone change" })
 
+--test for leap
+-- Настройка маппинга на лидер+Z
+vim.api.nvim_set_keymap('n', '<Leader>z', ":lua require('leap').leap { target_windows = { vim.fn.win_getid() } }<CR>", { noremap = true, silent = true })
