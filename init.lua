@@ -8,8 +8,52 @@ vim.opt.relativenumber = true
 vim.opt.wildmenu = true -- Включает автодополнение в командной строке
 vim.opt.wildmode = { "longest:full", "full" } -- Настраивает режим автодополнения
 
-vim.cmd('syntax enable')   -- Включает подсветку синтаксиса
-vim.cmd('filetype plugin indent on')  -- Включает автозавершение и плагины
+vim.cmd "syntax enable" -- Включает подсветку синтаксиса
+vim.cmd "filetype plugin indent on" -- Включает автозавершение и плагины
+
+-- Прокрутка вниз
+vim.keymap.set("n", "<C-d>", function()
+  local scroll = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  -- Прокрутка вниз
+  vim.cmd("normal! " .. scroll .. "j")
+  vim.cmd "normal! zb" -- Перемещаем курсор в нижнюю часть экрана (bottom)
+end, { noremap = true, silent = true, desc = "Scroll down with cursor at the bottom" })
+
+vim.keymap.set("v", "<C-d>", function()
+  local scroll = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  -- Прокрутка вниз в визуальном режиме
+  vim.cmd("normal! " .. scroll .. "j")
+  vim.cmd "normal! zb" -- Перемещаем курсор в нижнюю часть экрана (bottom)
+end, { noremap = true, silent = true, desc = "Scroll down with cursor at the bottom in visual mode" })
+
+-- Прокрутка вверх
+vim.keymap.set("n", "<C-u>", function()
+  local scroll = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  -- Прокрутка вверх
+  vim.cmd("normal! " .. scroll .. "k")
+  vim.cmd "normal! zt" -- Перемещаем курсор в верхнюю часть экрана (top)
+end, { noremap = true, silent = true, desc = "Scroll up with cursor at the top" })
+
+vim.keymap.set("v", "<C-u>", function()
+  local scroll = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  -- Прокрутка вверх в визуальном режиме
+  vim.cmd("normal! " .. scroll .. "k")
+  vim.cmd "normal! zt" -- Перемещаем курсор в верхнюю часть экрана (top)
+end, { noremap = true, silent = true, desc = "Scroll up with cursor at the top in visual mode" })
+
+-- Прокрутка вниз с сохранением выделения
+vim.keymap.set("n", "<C-d>", function()
+  local lines = vim.api.nvim_win_get_height(0) / 2
+  vim.cmd("normal! " .. lines .. "j")
+  vim.cmd "normal! zb"
+end, { noremap = true, silent = true, desc = "Scroll down without losing selection" })
+
+-- Прокрутка вверх с сохранением выделения
+vim.keymap.set("n", "<C-u>", function()
+  local lines = vim.api.nvim_win_get_height(0) / 2
+  vim.cmd("normal! " .. lines .. "k")
+  vim.cmd "normal! zt"
+end, { noremap = true, silent = true, desc = "Scroll up without losing selection" })
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"

@@ -18,17 +18,17 @@ map("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true, des
 map("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
 
 -- Normal и Visual режим: удаление в черную дыру с помощью <Ctrl-d>
-map("n", "<C-d>", '"_d', { desc = "Delete without copying (Normal)" })
-map("v", "<C-d>", '"_d', { desc = "Delete selection without copying (Visual)" })
+-- map("n", "<C-d>", '"_d', { desc = "Delete without copying (Normal)" })
+-- map("v", "<C-d>", '"_d', { desc = "Delete selection without copying (Visual)" })
 
 -- Insert режим: удаление символа перед курсором в черную дыру
-map("i", "<C-d>", "<C-o>\"_x", { desc = "Delete character without copying (Insert)" })
+map("i", "<C-d>", '<C-o>"_x', { desc = "Delete character without copying (Insert)" })
 
 -- Маппинг для сохранения файла по CTRL-S из всех режимов
-map({'i', 'n', 'v'}, '<leader>s', '<cmd>w<CR>', { silent = true })
+map({ "i", "n", "v" }, "<leader>s", "<cmd>w<CR>", { silent = true })
 
 -- Маппинг для UNDO на Ctrl-Z в NORMAL, VISUAL и INSERT режимах
-map({"n", "v", "i"}, "<C-z>", "<Esc>u", { noremap = true, silent = true })
+map({ "n", "v", "i" }, "<C-z>", "<Esc>u", { noremap = true, silent = true })
 
 -- Маппинг jj для выхода из режима вставки.
 map("i", "jj", "<ESC>")
@@ -43,12 +43,12 @@ map("n", "<leader>t", "<cmd>Huefy<CR>", { noremap = true, silent = true, desc = 
 
 -- Маппинг для переименования переменной с помощью LSP, оно будет изменено во всех местах
 map("n", "<leader>rn", function()
-    vim.lsp.buf.rename()
+  vim.lsp.buf.rename()
 end, { desc = "Rename variable across all occurrences" })
 
 -- Маппинг для выхода из всех окон и выхода из Neovim
 map("n", "<Esc><Esc>", ":qa<CR>", { noremap = true, silent = true, desc = "Quit and close all windows Neovim" })
-map( "n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
+map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
 --map("n", "<leader>q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
 
 -- Delete word ander cursos and insert mode
@@ -58,11 +58,28 @@ map("v", "<leader>i", "c", { noremap = true, silent = true, desc = "Change selec
 map("v", "<leader>i", '"_c', { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" }) -- the same but black hole
 
 -- Delete selected word and paste from a buffer
-vim.api.nvim_set_keymap('v', '<leader>ip', '"_diw"+p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<leader>ip", '"_diw"+p', { noremap = true, silent = true })
 
 -- Redo
 map("n", "<C-r>", "<C-r>", { noremap = true, silent = true, desc = "Redo last undone change" })
 
 --test for leap
 -- Настройка маппинга на лидер+Z
-vim.api.nvim_set_keymap('n', '<Leader>z', ":lua require('leap').leap { target_windows = { vim.fn.win_getid() } }<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  "n",
+  "<Leader>z",
+  ":lua require('leap').leap { target_windows = { vim.fn.win_getid() } }<CR>",
+  { noremap = true, silent = true }
+)
+
+-- Shift + V for "V-line" mode
+map("n", "<S-V>", "V", { desc = "Enter Visual Line Mode" })
+
+-- Включить Visual Line Mode при двойном нажатии "v" в Normal режиме
+vim.keymap.set("n", "v", function()
+  if vim.fn.getcharstr() == "v" then
+    vim.cmd "normal! V"
+  else
+    vim.cmd "normal! v"
+  end
+end, { noremap = true, silent = true, desc = "Double 'v' to enter Visual Line Mode" })
