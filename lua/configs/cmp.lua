@@ -3,7 +3,9 @@ dofile(vim.g.base46_cache .. "cmp")
 local cmp = require "cmp"
 
 local options = {
-  completion = { completeopt = "menu,menuone" },
+  completion = {
+    completeopt = "menuone,menuone,noinsert",
+  },
 
   snippet = {
     expand = function(args)
@@ -52,6 +54,7 @@ local options = {
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
+    { name = "cmdline" },
   },
 }
 

@@ -1,9 +1,4 @@
 return {
-  -- Плагин для автоформатирования кода
-  {
-    "stevearc/conform.nvim",
-    opts = require "configs.conform",
-  },
 
   -- Плагин для работы с LSP
   {
@@ -118,6 +113,7 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-cmdline",
       },
     },
     opts = function()
@@ -143,6 +139,7 @@ return {
       return require "nvchad.configs.telescope"
     end,
   },
+
   {
     "hrsh7th/cmp-cmdline",
     dependencies = { "hrsh7th/nvim-cmp" },
@@ -206,20 +203,20 @@ return {
     end,
   },
 
-  -- ESLint
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      local null_ls = require "null-ls"
-      null_ls.setup {
-        sources = {
-          null_ls.builtins.diagnostics.eslint, -- Диагностика ESLint
-          null_ls.builtins.formatting.eslint, -- Форматирование ESLint
-        },
-      }
-    end,
-  },
+  -- -- ESLint
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     local null_ls = require "null-ls"
+  --     null_ls.setup {
+  --       sources = {
+  --         null_ls.builtins.diagnostics.eslint, -- Диагностика ESLint
+  --         null_ls.builtins.formatting.eslint, -- Форматирование ESLint
+  --       },
+  --     }
+  --   end,
+  -- },
 
   -- For templates. "!" for html
   {
@@ -362,21 +359,82 @@ return {
       end, { desc = "Format file or range (in visual mode)" })
     end,
   },
+
+  --  CMDline-popup (also see settings in nvim/init.lua)
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     -- add any options here
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     "MunifTanjim/nui.nvim",
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     "rcarriga/nvim-notify",
+  --   },
+  -- },
+
+  -- -- Установка ALE с использованием Lazy
+  -- require("lazy").setup {
+  --   {
+  --     "dense-analysis/ale",
+  --     event = "BufReadPre", -- Загружается при открытии файла
+  --     config = function()
+  --       -- Настройка ALE
+  --       vim.g.ale_linters = {
+  --         javascript = { "eslint_d" },
+  --         typescript = { "eslint_d" },
+  --         javascriptreact = { "eslint_d" },
+  --         typescriptreact = { "eslint_d" },
+  --       }
   --
-  -- lazy.nvim
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-  },
+  --       -- vim.g.ale_fixers = { -- fixing (maybe formatter?)
+  --       --   javascript = { "eslint" },
+  --       --   typescript = { "eslint" },
+  --       --   javascriptreact = { "eslint" },
+  --       --   typescriptreact = { "eslint" },
+  --       -- }
+  --
+  --       -- Включаем линтинг в реальном времени
+  --       vim.g.ale_lint_on_insert_leave = 1 -- Линтинг после выхода из режима вставки
+  --       vim.g.ale_lint_on_save = 0 -- Отключаем линтинг при сохранении
+  --       vim.g.ale_fix_on_save = 0 -- Отключаем автоматическое исправление при сохранении
+  --       vim.g.ale_lint_delay = 200 -- Задержка перед запуском линтинга (в миллисекундах)
+  --     end,
+  --   },
+  -- },
+  --
+  -- Установка плагина nvim-lint
+  -- {
+  --   "mfussenegger/nvim-lint",
+  --   event = { "BufReadPre", "BufNewFile" }, -- Загружается при открытии или создании файла
+  --   config = function()
+  --     -- Инициализация линтера
+  --     local lint = require "lint"
+  --
+  --     -- Настройка линтеров для разных типов файлов
+  --     lint.linters_by_ft = {
+  --       javascript = { "eslint_d" }, -- Для JS используем eslint_d
+  --       typescript = { "eslint_d" }, -- Для TS используем eslint_d
+  --       javascriptreact = { "eslint_d" }, -- Для JS React используем eslint_d
+  --       typescriptreact = { "eslint_d" }, -- Для TS React используем eslint_d
+  --     }
+  --
+  --     -- Автокоманды для линтинга
+  --     vim.api.nvim_create_autocmd("BufWritePost", {
+  --       pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" }, -- Линтить файлы только с нужными расширениями
+  --       callback = function()
+  --         require("lint").try_lint() -- Запуск линтинга при сохранении файла
+  --       end,
+  --     })
+  --
+  --     -- Горячие клавиши для ручного запуска линтинга
+  --     vim.keymap.set("n", "<leader>ll", function()
+  --       require("lint").try_lint() -- Запуск линтинга по <leader>ll
+  --     end, { desc = "Trigger linting for current file" })
+  --   end,
+  -- },
 }
