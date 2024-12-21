@@ -86,6 +86,22 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "nvchad.autocmds"
 
+-- Noise (cmdline popup)
+require("noice").setup {
+  views = {
+    cmdline_popup = {
+      border = {
+        style = "none", -- Убираем рамку
+        padding = { 2, 3 }, -- Поставить отступы
+      },
+      filter_options = {},
+      win_options = {
+        winhighlight = "NormalFloat:Normal,FloatBorder:None", -- Убираем рамку и ее цвет
+      },
+    },
+  },
+}
+
 vim.schedule(function()
   require "mappings"
 end)

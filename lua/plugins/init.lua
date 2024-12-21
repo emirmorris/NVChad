@@ -30,7 +30,7 @@ return {
     config = function()
       require("nvim-ts-autotag").setup {
         filetypes = { "html", "javascript", "typescript", "javascriptreact", "typescriptreact", "jsx", "tsx" },
-        skip_tags = { "img", "input", "br", "hr", "area", "base", "col", "embed", "source", "track", "wbr" }
+        skip_tags = { "img", "input", "br", "hr", "area", "base", "col", "embed", "source", "track", "wbr" },
       }
     end,
   },
@@ -40,16 +40,22 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc", "html", "css", "javascript", "typescript", "tsx", "python"
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "tsx",
+        "python",
       },
       highlight = {
-        enable = true,  -- включает подсветку для всех файлов с поддержкой Treesitter
+        enable = true, -- включает подсветку для всех файлов с поддержкой Treesitter
       },
     },
-    build = ":TSUpdate",  -- автоматически обновлять Treesitter
+    build = ":TSUpdate", -- автоматически обновлять Treesitter
   },
-
-
 
   -- Плагин для работы с цветами и выбором цветовой палитры (volt)
   {
@@ -63,14 +69,13 @@ return {
     cmd = { "Shades", "Huefy" },
   },
 
-
   -- Поддержка интерфейса команд (which-key)
   {
     "folke/which-key.nvim",
     keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
     cmd = "WhichKey",
     opts = function()
-      return {}  -- пустой набор опций
+      return {} -- пустой набор опций
     end,
   },
 
@@ -120,8 +125,6 @@ return {
     end,
   },
 
-
-
   -- Git интеграция
   {
     "lewis6991/gitsigns.nvim",
@@ -141,44 +144,44 @@ return {
     end,
   },
   {
-  "hrsh7th/cmp-cmdline",
-  dependencies = { "hrsh7th/nvim-cmp" }
+    "hrsh7th/cmp-cmdline",
+    dependencies = { "hrsh7th/nvim-cmp" },
   },
 
--- Плагин для управления файлами (nvim-tree)
+  -- Плагин для управления файлами (nvim-tree)
   {
-      "nvim-tree/nvim-tree.lua",
-      cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-      init = function()
-        -- Автокоманда для открытия nvim-tree при запуске
-        vim.api.nvim_create_autocmd("VimEnter", {
-            callback = function()
-                require("nvim-tree.api").tree.open()
-            end
-        })
-      end,
-      opts = function()
-        local nvim_tree = require "nvim-tree"
-        nvim_tree.setup({
-            view = { -- doesn't work
-              -- width = 20,  -- Здесь установите желаемую ширину
-              -- side = 'left',  -- Это может быть 'left' или 'right'
-            },
-        })
-        
-        return require "nvchad.configs.nvimtree"
-      end,
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    init = function()
+      -- Автокоманда для открытия nvim-tree при запуске
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          require("nvim-tree.api").tree.open()
+        end,
+      })
+    end,
+    opts = function()
+      local nvim_tree = require "nvim-tree"
+      nvim_tree.setup {
+        view = { -- doesn't work
+          -- width = 20,  -- Здесь установите желаемую ширину
+          -- side = 'left',  -- Это может быть 'left' или 'right'
+        },
+      }
+
+      return require "nvchad.configs.nvimtree"
+    end,
   },
 
-{
+  {
     "junegunn/vim-emoji",
     config = function()
-      vim.g.emoji_in_emoji_filetypes = { "markdown", "text", "javascript", "typescript", "javascriptreact", "typescriptreact" }
+      vim.g.emoji_in_emoji_filetypes =
+        { "markdown", "text", "javascript", "typescript", "javascriptreact", "typescriptreact" }
     end,
-},
+  },
 
-
-{
+  {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
@@ -195,7 +198,6 @@ return {
     },
   },
 
-
   {
     "mfussenegger/nvim-lint",
     event = "VeryLazy",
@@ -209,16 +211,15 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      local null_ls = require("null-ls")
-      null_ls.setup({
+      local null_ls = require "null-ls"
+      null_ls.setup {
         sources = {
           null_ls.builtins.diagnostics.eslint, -- Диагностика ESLint
           null_ls.builtins.formatting.eslint, -- Форматирование ESLint
         },
-      })
+      }
     end,
   },
-  
 
   -- For templates. "!" for html
   {
@@ -227,7 +228,6 @@ return {
       vim.g.user_emmet_leader_key = ","
     end,
   },
-
 
   -- Avante. AI plugin for claud 3.5 sonnet
   {
@@ -268,7 +268,7 @@ return {
       },
       {
         -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
+        "MeanderingProgrammer/render-markdown.nvim",
         opts = {
           file_types = { "markdown", "Avante" },
         },
@@ -281,43 +281,42 @@ return {
   {
     "ggandor/leap.nvim",
     config = function()
-      local leap = require('leap')
-
+      local leap = require "leap"
 
       -- Дополнительные настройки Leap
       leap.opts.case_sensitive = true
 
       -- Настроить отображение символов для текущего поиска
-      require('leap').opts.highlight_unlabeled = true
-      require('leap').opts.highlight_current_target = true
+      require("leap").opts.highlight_unlabeled = true
+      require("leap").opts.highlight_current_target = true
     end,
   },
 
   -- codeium AI
   {
-      "Exafunction/codeium.nvim",
-      dependencies = {
-          "nvim-lua/plenary.nvim",
-          "hrsh7th/nvim-cmp",
-      },
-      config = function()
-        require("codeium").setup({
-            virtual_text = { -- turn on "Ghost text"
-                enabled = true,
-                manual = false, -- Убедитесь, что это значение false, чтобы текст появлялся автоматически
-                filetypes = {
-                    -- Убедитесь, что для вашего файла включена поддержка
-                    python = true,
-                    lua = true,
-                },
-                default_filetype_enabled = true, -- Включает виртуальный текст для всех типов файлов
-            }
-        })
-      end,
-      lazy = false, -- Указываем, что плагин должен загружаться сразу
+    "Exafunction/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      require("codeium").setup {
+        virtual_text = { -- turn on "Ghost text"
+          enabled = true,
+          manual = false, -- Убедитесь, что это значение false, чтобы текст появлялся автоматически
+          filetypes = {
+            -- Убедитесь, что для вашего файла включена поддержка
+            python = true,
+            lua = true,
+          },
+          default_filetype_enabled = true, -- Включает виртуальный текст для всех типов файлов
+        },
+      }
+    end,
+    lazy = false, -- Указываем, что плагин должен загружаться сразу
   },
 
--- Formatter
+  -- Formatter
   {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -363,6 +362,21 @@ return {
       end, { desc = "Format file or range (in visual mode)" })
     end,
   },
-
-
+  --
+  -- lazy.nvim
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+  },
 }
