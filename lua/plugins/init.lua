@@ -277,24 +277,45 @@ return {
     },
   },
 
--- leap
-{
-  "ggandor/leap.nvim",
-  config = function()
-    local leap = require('leap')
+  -- leap
+  {
+    "ggandor/leap.nvim",
+    config = function()
+      local leap = require('leap')
 
 
-    -- Дополнительные настройки Leap
-    leap.opts.case_sensitive = true
+      -- Дополнительные настройки Leap
+      leap.opts.case_sensitive = true
 
-    -- Настроить отображение символов для текущего поиска
-    require('leap').opts.highlight_unlabeled = true
-    require('leap').opts.highlight_current_target = true
-  end,
-}
+      -- Настроить отображение символов для текущего поиска
+      require('leap').opts.highlight_unlabeled = true
+      require('leap').opts.highlight_current_target = true
+    end,
+  },
 
-
-
+  -- codeium AI
+  {
+      "Exafunction/codeium.nvim",
+      dependencies = {
+          "nvim-lua/plenary.nvim",
+          "hrsh7th/nvim-cmp",
+      },
+      config = function()
+        require("codeium").setup({
+            virtual_text = { -- turn on "Ghost text"
+                enabled = true,
+                manual = false, -- Убедитесь, что это значение false, чтобы текст появлялся автоматически
+                filetypes = {
+                    -- Убедитесь, что для вашего файла включена поддержка
+                    python = true,
+                    lua = true,
+                },
+                default_filetype_enabled = true, -- Включает виртуальный текст для всех типов файлов
+            }
+        })
+      end,
+      lazy = false, -- Указываем, что плагин должен загружаться сразу
+  },
 
 
 }
