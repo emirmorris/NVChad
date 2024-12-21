@@ -317,5 +317,52 @@ return {
       lazy = false, -- Указываем, что плагин должен загружаться сразу
   },
 
+-- Formatter
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local conform = require "conform"
+
+      conform.setup {
+        formatters_by_ft = {
+          lua = { "stylua" },
+          javascript = { "prettierd", "prettier" },
+          typescript = { "prettierd", "prettier" },
+          javascriptreact = { "prettierd", "prettier" },
+          typescriptreact = { "prettierd", "prettier" },
+          json = { "prettierd", "prettier" },
+          markdown = { "prettierd", "prettier" },
+          html = { "htmlbeautifier" },
+          bash = { "beautysh" },
+          yaml = { "yamlfix" },
+          toml = { "taplo" },
+          css = { "prettierd", "prettier" },
+          xml = { "xmllint" },
+          python = { "black", "pylint" }, -- Python: black и pylint
+        },
+      }
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function()
+          require("conform").format {
+            lsp_fallback = true,
+            async = false,
+            timeout_ms = 1000,
+          }
+        end,
+      })
+
+      vim.keymap.set({ "n", "v" }, "<leader>l", function()
+        conform.format {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        }
+      end, { desc = "Format file or range (in visual mode)" })
+    end,
+  },
+
 
 }
