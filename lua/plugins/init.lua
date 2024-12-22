@@ -64,17 +64,36 @@ return {
     cmd = { "Shades", "Huefy" },
   },
 
-  -- Поддержка интерфейса команд (which-key)
   {
     "folke/which-key.nvim",
-    keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-    cmd = "WhichKey",
-    opts = function()
-      return {} -- пустой набор опций
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "<leader>?", -- Переопределяем, чтобы команды показывались только по лидер + ?
+        function()
+          require("which-key").show { global = false }
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+    config = function(_, opts)
+      require("which-key").setup(opts)
+
+      -- Изменение цветов для различных элементов в пастельных тонах
+      vim.api.nvim_set_hl(0, "WhichKey", { fg = "#A3D9A5" }) -- Основной цвет для команд (мятный)
+      vim.api.nvim_set_hl(0, "WhichKeyGroup", { fg = "#b6ffc3" }) -- Цвет для групп (пастельный розовый)
+      vim.api.nvim_set_hl(0, "WhichKeySeparator", { fg = "#E1D5E7" }) -- Цвет разделителей (светлый сиреневый)
+      vim.api.nvim_set_hl(0, "WhichKeyDesc", { fg = "#A8D5E2" }) -- Цвет для описаний команд (небесно-голубой)
+
+      -- Для других режимов (например, Visual) применяем аналогичные цвета
+      vim.api.nvim_set_hl(0, "WhichKeyVisual", { fg = "#A3D9A5" }) -- Цвет для команд в Visual Mode (мятный)
+      vim.api.nvim_set_hl(0, "WhichKeyGroupVisual", { fg = "#FFB6B9" }) -- Цвет для групп в Visual Mode (пастельный розовый)
+      vim.api.nvim_set_hl(0, "WhichKeyDescVisual", { fg = "#A8D5E2" }) -- Цвет для описаний в Visual Mode (небесно-голубой)
     end,
   },
 
-  -- load luasnips + cmp related in insert mode only
+  -- nvim-cmp from nvchad 21 dec 2024. added supermaven.
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -204,7 +223,7 @@ return {
     end,
   },
 
-  -- -- ESLint
+  -- -- ESLint  (Null-ls been archived)
   -- {
   --   "jose-elias-alvarez/null-ls.nvim",
   --   dependencies = { "nvim-lua/plenary.nvim" },
@@ -438,4 +457,35 @@ return {
   --     end, { desc = "Trigger linting for current file" })
   --   end,
   -- },
+
+  {
+    "mfussenegger/nvim-lint",
+    event = {
+      "BufReadPre",
+      "BufNewFile",
+    },
+    config = function()
+      local lint = require "lint"
+
+      lint.linters_by_ft = {
+        javascript = { "eslint_d" },
+        typescript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
+      }
+
+      local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        group = lint_augroup,
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+
+      vim.keymap.set("n", "<leader>ll", function()
+        lint.try_lint()
+      end, { desc = "Trigger linting for current file" })
+    end,
+  },
 }

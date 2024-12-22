@@ -76,10 +76,10 @@ vim.api.nvim_set_keymap(
 map("n", "<S-V>", "V", { desc = "Enter Visual Line Mode" })
 
 -- Включить Visual Line Mode при двойном нажатии "v" в Normal режиме
-vim.keymap.set("n", "v", function()
-  if vim.fn.getcharstr() == "v" then
-    vim.cmd "normal! V"
-  else
-    vim.cmd "normal! v"
-  end
-end, { noremap = true, silent = true, desc = "Double 'v' to enter Visual Line Mode" })
+-- vim.keymap.set("n", "v", function()
+--   if vim.fn.getcharstr() == "v" then
+--     vim.cmd "normal! V"
+--   else
+--     vim.cmd "normal! v"
+--   end
+-- end, { noremap = true, silent = true, desc = "Double 'v' to enter Visual Line Mode" })
