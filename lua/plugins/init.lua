@@ -82,7 +82,7 @@ return {
 
       -- Изменение цветов для различных элементов в пастельных тонах
       vim.api.nvim_set_hl(0, "WhichKey", { fg = "#A3D9A5" }) -- Основной цвет для команд (мятный)
-      vim.api.nvim_set_hl(0, "WhichKeyGroup", { fg = "#b6ffc3" }) -- Цвет для групп (пастельный розовый)
+      vim.api.nvim_set_hl(0, "WhichKeyGroup", { fg = "#b6ffcb" }) -- Цвет для групп (пастельный розовый)
       vim.api.nvim_set_hl(0, "WhichKeySeparator", { fg = "#E1D5E7" }) -- Цвет разделителей (светлый сиреневый)
       vim.api.nvim_set_hl(0, "WhichKeyDesc", { fg = "#A8D5E2" }) -- Цвет для описаний команд (небесно-голубой)
 
@@ -487,5 +487,18 @@ return {
         lint.try_lint()
       end, { desc = "Trigger linting for current file" })
     end,
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+
+      -- Only one of these is needed.
+      "nvim-telescope/telescope.nvim", -- optional
+      -- "ibhagwan/fzf-lua", -- optional
+      -- "echasnovski/mini.pick", -- optional
+    },
+    config = true,
   },
 }
