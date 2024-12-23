@@ -83,3 +83,23 @@ map("n", "<S-V>", "V", { desc = "Enter Visual Line Mode" })
 --     vim.cmd "normal! v"
 --   end
 -- end, { noremap = true, silent = true, desc = "Double 'v' to enter Visual Line Mode" })
+
+---
+-- " Переход к началу строки в нормальном режиме
+vim.keymap.set("n", "H", "^", { noremap = true, silent = true, desc = "Go to the start of the line" })
+-- " Переход к концу строки в нормальном режиме
+vim.keymap.set("n", "L", "$", { noremap = true, silent = true, desc = "Go to the end of the line" })
+-- " Переход к началу строки в визуальном режиме
+vim.keymap.set("v", "H", "^", { noremap = true, silent = true, desc = "Go to the start of the line in visual mode" })
+-- " Переход к концу строки в визуальном режиме
+vim.keymap.set("v", "L", "$", { noremap = true, silent = true, desc = "Go to the end of the line in visual mode" })
+
+---
+-- " Переход на 10 строк вниз в обычном режиме
+vim.keymap.set("n", "J", "10j", { noremap = true, silent = true, desc = "Move 10 lines down in normal mode" })
+-- " Переход на 10 строк вверх в обычном режиме
+vim.keymap.set("n", "K", "10k", { noremap = true, silent = true, desc = "Move 10 lines up in normal mode" })
+-- " Переход на 10 строк вниз в визуальном режиме
+vim.keymap.set("v", "J", "10j", { noremap = true, silent = true, desc = "Move 10 lines down in visual mode" })
+-- " Переход на 10 строк вверх в визуальном режиме
+vim.keymap.set("v", "K", "10k", { noremap = true, silent = true, desc = "Move 10 lines up in visual mode" })
