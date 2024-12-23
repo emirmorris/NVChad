@@ -1,8 +1,10 @@
 -- ~/.config/nvim/lua/configs/lint.lua
-local lint = require('lint')
+local lint = require "lint"
 
 lint.linters_by_ft = {
-    python = {'flake8'},  -- Используйте свой линтер
-    lua = {'luacheck'},
-    -- добавьте другие языки, если нужно
+  javascript = { "eslint_d" },
+  typescript = { "eslint_d" },
+  javascriptreact = { "eslint_d" },
+  typescriptreact = { "eslint_d" },
 }
+

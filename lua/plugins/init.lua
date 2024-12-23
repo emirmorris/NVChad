@@ -97,10 +97,10 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      {
-        "supermaven-inc/supermaven-nvim",
-        opts = {},
-      },
+      -- {
+      --   "supermaven-inc/supermaven-nvim",
+      --   opts = {},
+      -- },
       {
         -- snippet plugin
         "L3MON4D3/LuaSnip",
@@ -137,9 +137,9 @@ return {
       },
     },
 
-    opts = function(_, opts)
-      table.insert(opts.sources, 1, { name = "supermaven" })
-    end,
+    -- opts = function(_, opts)
+    --   table.insert(opts.sources, 1, { name = "supermaven" })
+    -- end,
   },
   -- Git интеграция
   {
@@ -313,24 +313,46 @@ return {
   {
     "Exafunction/codeium.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
+      "nvim-lua/plenary.nvim", -- Необходимо для работы плагина
+      "hrsh7th/nvim-cmp", -- Если используется для автодополнения
     },
     config = function()
+      -- Отключаем маппинг на Tab
+      vim.g.codeium_no_map_tab = true
+
+      -- Настроим клавиши для плагина
+      vim.keymap.set("i", "<C-g>", function()
+        return vim.fn["codeium#Accept"]() -- Должно вызвать функцию
+      end, { expr = true, silent = true })
+
+      vim.keymap.set("i", "<C-;>", function()
+        return vim.fn
+      end, { expr = true, silent = true })
+
+      vim.keymap.set("i", "<C-,>", function()
+        return vim.fn["codeium#CycleCompletions"](-1)
+      end, { expr = true, silent = true })
+
+      vim.keymap.set("i", "<C-x>", function()
+        return vim.fn["codeium#Clear"]()
+      end, { expr = true, silent = true })
+
+      -- Инициализация Codeium
       require("codeium").setup {
-        virtual_text = { -- turn on "Ghost text"
+        virtual_text = {
           enabled = true,
-          manual = false, -- Убедитесь, что это значение false, чтобы текст появлялся автоматически
+          manual = false,
           filetypes = {
-            -- Убедитесь, что для вашего файла включена поддержка
             python = true,
             lua = true,
+            javascript = true,
+            typescript = true,
           },
-          default_filetype_enabled = true, -- Включает виртуальный текст для всех типов файлов
+          default_filetype_enabled = true,
         },
       }
     end,
-    lazy = false, -- Указываем, что плагин должен загружаться сразу
+    lazy = false, -- Указываем, чтобы плагин загружался сразу
   },
 
   -- Formatter
@@ -355,7 +377,7 @@ return {
           toml = { "taplo" },
           css = { "prettierd", "prettier" },
           xml = { "xmllint" },
-          python = { "black", "pylint" }, -- Python: black и pylint
+          python = { "yapf" },
         },
       }
 

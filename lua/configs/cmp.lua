@@ -4,7 +4,7 @@ local cmp = require "cmp"
 
 local options = {
   completion = {
-    completeopt = "menuone,menuone,noinsert",
+    completeopt = "menuone,noinsert",
   },
 
   snippet = {
@@ -34,7 +34,7 @@ local options = {
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, { "i", "s", expr = true }),
 
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
