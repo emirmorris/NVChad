@@ -97,10 +97,10 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      -- {
-      --   "supermaven-inc/supermaven-nvim",
-      --   opts = {},
-      -- },
+      {
+        "supermaven-inc/supermaven-nvim",
+        opts = {},
+      },
       {
         -- snippet plugin
         "L3MON4D3/LuaSnip",
@@ -129,14 +129,29 @@ return {
           })
 
           cmp.setup.cmdline(":", {
-            mapping = cmp.mapping.preset.cmdline(),
+            -- preselect = cmp.PreselectMode.None, -- Убираем автовыбор первого элемента
+            mapping = {
+              -- Tab переключает на следующий элемент
+              ["<Tab>"] = cmp.mapping.select_next_item(),
+              ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+              -- Enter принимает выбранную подсказку, если она выбрана явно
+              ["<CR>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.confirm { select = true } -- Принять явно выбранное предложение
+                else
+                  fallback() -- Выполняется обычный Enter, если подсказок нет
+                end
+              end, { "c" }),
+              -- Shift-Enter: полное игнорирование подсказки, вводится только текст
+            },
             sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
-            matching = { disallow_symbol_nonprefix_matching = false },
+            -- matching = { disallow_symbol_nonprefix_matching = false },
           })
         end,
       },
     },
 
+    -- make supermaven-suggestion the first in suggestion list. When you text code.
     -- opts = function(_, opts)
     --   table.insert(opts.sources, 1, { name = "supermaven" })
     -- end,

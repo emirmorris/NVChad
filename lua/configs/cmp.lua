@@ -4,7 +4,7 @@ local cmp = require "cmp"
 
 local options = {
   completion = {
-    completeopt = "menuone,noinsert",
+    completeopt = "menuone",
   },
 
   snippet = {
@@ -55,6 +55,7 @@ local options = {
     { name = "nvim_lua" },
     { name = "path" },
     { name = "cmdline" },
+    -- { name = "supermaven" }, -- IDK for what I need to add
   },
 }
 
