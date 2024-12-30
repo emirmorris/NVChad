@@ -18,8 +18,8 @@ map("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true, des
 map("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
 
 -- Normal и Visual режим: удаление в черную дыру с помощью <Ctrl-d>
--- map("n", "<C-d>", '"_d', { desc = "Delete without copying (Normal)" })
--- map("v", "<C-d>", '"_d', { desc = "Delete selection without copying (Visual)" })
+map("n", "<S-d>", '"_d', { desc = "Delete without copying (Normal)" })
+map("v", "<S-d>", '"_d', { desc = "Delete selection without copying (Visual)" })
 
 -- Insert режим: удаление символа перед курсором в черную дыру
 map("i", "<C-d>", '<C-o>"_x', { desc = "Delete character without copying (Insert)" })
