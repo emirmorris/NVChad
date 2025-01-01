@@ -129,23 +129,30 @@ return {
           })
 
           cmp.setup.cmdline(":", {
-            -- preselect = cmp.PreselectMode.None, -- Убираем автовыбор первого элемента
             mapping = {
-              -- Tab переключает на следующий элемент
-              ["<Tab>"] = cmp.mapping.select_next_item(),
-              ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-              -- Enter принимает выбранную подсказку, если она выбрана явно
-              ["<CR>"] = cmp.mapping(function(fallback)
+              ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
-                  cmp.confirm { select = true } -- Принять явно выбранное предложение
+                  cmp.select_next_item()
                 else
-                  fallback() -- Выполняется обычный Enter, если подсказок нет
+                  fallback()
                 end
               end, { "c" }),
-              -- Shift-Enter: полное игнорирование подсказки, вводится только текст
+              ["<S-Tab>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.select_prev_item()
+                else
+                  fallback()
+                end
+              end, { "c" }),
+              ["<CR>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                  cmp.confirm { select = true }
+                else
+                  fallback()
+                end
+              end, { "c" }),
             },
             sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
-            -- matching = { disallow_symbol_nonprefix_matching = false },
           })
         end,
       },
@@ -324,51 +331,51 @@ return {
     end,
   },
 
-  -- codeium AI
-  {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- Необходимо для работы плагина
-      "hrsh7th/nvim-cmp", -- Если используется для автодополнения
-    },
-    config = function()
-      -- Отключаем маппинг на Tab
-      vim.g.codeium_no_map_tab = true
-
-      -- Настроим клавиши для плагина
-      vim.keymap.set("i", "<C-g>", function()
-        return vim.fn["codeium#Accept"]() -- Должно вызвать функцию
-      end, { expr = true, silent = true })
-
-      vim.keymap.set("i", "<C-;>", function()
-        return vim.fn
-      end, { expr = true, silent = true })
-
-      vim.keymap.set("i", "<C-,>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
-      end, { expr = true, silent = true })
-
-      vim.keymap.set("i", "<C-x>", function()
-        return vim.fn["codeium#Clear"]()
-      end, { expr = true, silent = true })
-
-      -- Инициализация Codeium
-      require("codeium").setup {
-        virtual_text = {
-          enabled = true,
-          manual = false,
-          filetypes = {
-            python = true,
-            lua = true,
-            javascript = true,
-            typescript = true,
-          },
-          default_filetype_enabled = true,
-        },
-      }
-    end,
-    lazy = false, -- Указываем, чтобы плагин загружался сразу
-  },
+  -- -- codeium AI
+  -- {
+  --   "Exafunction/codeium.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim", -- Необходимо для работы плагина
+  --     "hrsh7th/nvim-cmp", -- Если используется для автодополнения
+  --   },
+  --   config = function()
+  --     -- Отключаем маппинг на Tab
+  --     vim.g.codeium_no_map_tab = true
+  --
+  --     -- Настроим клавиши для плагина
+  --     vim.keymap.set("i", "<C-g>", function()
+  --       return vim.fn["codeium#Accept"]() -- Должно вызвать функцию
+  --     end, { expr = true, silent = true })
+  --
+  --     vim.keymap.set("i", "<C-;>", function()
+  --       return vim.fn
+  --     end, { expr = true, silent = true })
+  --
+  --     vim.keymap.set("i", "<C-,>", function()
+  --       return vim.fn["codeium#CycleCompletions"](-1)
+  --     end, { expr = true, silent = true })
+  --
+  --     vim.keymap.set("i", "<C-x>", function()
+  --       return vim.fn["codeium#Clear"]()
+  --     end, { expr = true, silent = true })
+  --
+  --     -- Инициализация Codeium
+  --     require("codeium").setup {
+  --       virtual_text = {
+  --         enabled = true,
+  --         manual = false,
+  --         filetypes = {
+  --           python = true,
+  --           lua = true,
+  --           javascript = true,
+  --           typescript = true,
+  --         },
+  --         default_filetype_enabled = true,
+  --       },
+  --     }
+  --   end,
+  --   lazy = false, -- Указываем, чтобы плагин загружался сразу
+  -- },
 
   -- Formatter
   {
