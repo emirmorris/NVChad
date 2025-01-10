@@ -7,6 +7,9 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- Маппинг для сохранения файла с лидером s
+map({ "i", "n", "v" }, "<leader>s", "<cmd>w<CR>", { silent = true, desc = "Save file" })
+
 -- Перемещение строки вверх
 map("n", "<A-Up>", ":m .-2<CR>==", { noremap = true, silent = true, desc = "Move line up" })
 map("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true, desc = "Move line up in insert mode" })
@@ -47,8 +50,8 @@ map("n", "<leader>rn", function()
 end, { desc = "Rename variable across all occurrences" })
 
 -- Маппинг для выхода из всех окон и выхода из Neovim
-map("n", "<Esc><Esc>", ":qa<CR>", { noremap = true, silent = true, desc = "Quit and close all windows Neovim" })
-map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim" })
+map("n", "<Esc><Esc>", ":qa!<CR>", { noremap = true, silent = true, desc = "Quit and close all windows Neovim" })
+map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim withoutavings" })
 --map("n", "<leader>q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
 
 -- Delete word ander cursos and insert mode
