@@ -11,14 +11,18 @@ map("i", "jk", "<ESC>")
 map({ "i", "n", "v" }, "<leader>s", "<cmd>w<CR>", { silent = true, desc = "Save file" })
 
 -- Перемещение строки вверх
-map("n", "<A-Up>", ":m .-2<CR>==", { noremap = true, silent = true, desc = "Move line up" })
-map("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true, desc = "Move line up in insert mode" })
-map("v", "<A-Up>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
+map("n", "<C-k>", ":m .-2<CR>==", { noremap = true, silent = true, desc = "Move line up" })
+map("i", "<C-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true, desc = "Move line up in insert mode" })
+map("v", "<C-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
 
 -- Перемещение строки вниз
-map("n", "<A-Down>", ":m .+1<CR>==", { noremap = true, silent = true, desc = "Move line down" })
-map("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true, desc = "Move line down in insert mode" })
-map("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
+map("n", "<C-j>", ":m .+1<CR>==", { noremap = true, silent = true, desc = "Move line down" })
+map("i", "<C-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true, desc = "Move line down in insert mode" })
+map("v", "<C-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
+
+-- Увеличение/уменьшение отступа
+map("n", "<C-h>", "<<", { noremap = true, silent = true, desc = "Decrease indentation" })
+map("n", "<C-l>", ">>", { noremap = true, silent = true, desc = "Increase indentation" })
 
 -- Normal и Visual режим: удаление в черную дыру с помощью <Ctrl-d>
 map("n", "<S-d>", '"_d', { desc = "Delete without copying (Normal)" })
@@ -54,7 +58,7 @@ map("n", "<Esc><Esc>", ":qa!<CR>", { noremap = true, silent = true, desc = "Quit
 map("n", "<leader>q", ":q<CR>", { noremap = true, silent = true, desc = "Quit Neovim withoutavings" })
 --map("n", "<leader>q", ":qa<CR>", { noremap = true, silent = true, desc = "Quit all windows and exit Neovim" })
 
--- Delete word ander cursos and insert mode
+-- Delete word under cursos and insert mode
 --map("n", "<A-i>", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("n", "<leader>i", "caw", { noremap = true, silent = true, desc = "Change current word and enter Insert Mode" })
 map("v", "<leader>i", "c", { noremap = true, silent = true, desc = "Change selected text and enter Insert Mode" })
@@ -88,14 +92,11 @@ map("n", "<S-V>", "V", { desc = "Enter Visual Line Mode" })
 -- end, { noremap = true, silent = true, desc = "Double 'v' to enter Visual Line Mode" })
 
 ---
--- " Переход к началу строки в нормальном режиме
-vim.keymap.set("n", "H", "^", { noremap = true, silent = true, desc = "Go to the start of the line" })
--- " Переход к концу строки в нормальном режиме
-vim.keymap.set("n", "L", "$", { noremap = true, silent = true, desc = "Go to the end of the line" })
--- " Переход к началу строки в визуальном режиме
-vim.keymap.set("v", "H", "^", { noremap = true, silent = true, desc = "Go to the start of the line in visual mode" })
--- " Переход к концу строки в визуальном режиме
-vim.keymap.set("v", "L", "$", { noremap = true, silent = true, desc = "Go to the end of the line in visual mode" })
+-- Перемещение на 15 символов вправо и влево (обычный и визуальный режимы)
+map("n", "<S-l>", "15l", { noremap = true, silent = true, desc = "Move 15 characters right" })
+map("n", "<S-h>", "15h", { noremap = true, silent = true, desc = "Move 15 characters left" })
+map("v", "<S-l>", "15l", { noremap = true, silent = true, desc = "Move 15 selected characters right" })
+map("v", "<S-h>", "15h", { noremap = true, silent = true, desc = "Move 15 selected characters left" })
 
 ---
 -- " Переход на 10 строк вниз в обычном режиме
@@ -115,3 +116,9 @@ vim.keymap.set(
   comment.insert_comment,
   { noremap = true, silent = true, desc = "Insert comment at end of line" }
 )
+
+-- Переключение на левое окно
+vim.keymap.set("n", "<C-,>", ":wincmd h<CR>", { noremap = true, silent = true, desc = "Switch to left window" })
+
+-- Переключение на правое окно
+vim.keymap.set("n", "<C-.>", ":wincmd l<CR>", { noremap = true, silent = true, desc = "Switch to right window" })

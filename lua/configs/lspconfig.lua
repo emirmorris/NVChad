@@ -35,7 +35,7 @@ lspconfig.ts_ls.setup {
     local function buf_set_keymap(...)
       vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
-    buf_set_keymap("n", "<leader>i", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
+    -- buf_set_keymap("n", "<leader>i", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true }) -- it has a conflict with current mapping, but maybe command is usefull
   end,
   handlers = handlers, -- Используем новые обработчики
   settings = {
