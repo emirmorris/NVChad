@@ -106,3 +106,12 @@ vim.keymap.set("n", "K", "10k", { noremap = true, silent = true, desc = "Move 10
 vim.keymap.set("v", "J", "10j", { noremap = true, silent = true, desc = "Move 10 lines down in visual mode" })
 -- " Переход на 10 строк вверх в визуальном режиме
 vim.keymap.set("v", "K", "10k", { noremap = true, silent = true, desc = "Move 10 lines up in visual mode" })
+
+-- For add comments (file config/comments.lua)
+local comment = require "configs.comments" -- Подключение файла comments.lua
+vim.keymap.set(
+  "n",
+  "<leader>c",
+  comment.insert_comment,
+  { noremap = true, silent = true, desc = "Insert comment at end of line" }
+)
